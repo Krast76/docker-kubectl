@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - 'master'
+    tags:
+      - '*'
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   docker:
@@ -41,3 +45,14 @@ jobs:
           tags: |
             krast/docker-kubectl:latest
             quay.io/krast76/docker-kubectl
+
+      -
+        if: not contains(github.ref, 'refs/tags/v')
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            krast/docker-kubectl:${GITHUB_REF}
+            quay.io/krast76/docker-kubectl:${GITHUB_REF}—
