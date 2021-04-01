@@ -47,7 +47,7 @@ jobs:
             quay.io/krast76/docker-kubectl
 
       -
-        if: not contains(github.ref, 'refs/tags/v')
+        if: contains(github.ref, 'refs/tags/v')
         name: Build and push
         uses: docker/build-push-action@v2
         with:
